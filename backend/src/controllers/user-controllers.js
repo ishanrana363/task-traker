@@ -25,11 +25,11 @@ exports.createUser = async (req,res) =>{
 
 exports.updateUser = async (req,res) =>{
     try{
-        const id = req.params.id;
+        const userEmail = req.query.email;
         let reqBoyd = req.body;
-        const filter = {_id:id}
+        const filter = {email:userEmail}
         const updateData = reqBoyd;
-        let data = await userModel.findByIdAndUpdate(filter,updateData,{new:true})
+        let data = await userModel.updateOne(filter,updateData,{new:true})
         res.status(200).json({
             status:"success",
             data : data
@@ -46,13 +46,32 @@ exports.updateUser = async (req,res) =>{
 // Task Delete
 
 exports.deleteUser = async (req,res) =>{
-res.send("delete user ")
+    try {
+        const userEmail = req.query.email;
+        console.log(userEmail)
+        const filter = {email:userEmail}
+        const data = await userModel.deleteOne(filter);
+        res.status(200).json({
+            status:"success",
+            data : data
+        })
+    } catch (error) {
+        res.status(500).json({
+            status:"fail",
+            data : e.toString()
+        })
+    }
+
 }
 
 // Single Task
 
 exports.singleUser = async (req,res) =>{
-res.send("single user find")
+    try {
+        const userEmail = req.query.email;
+    } catch (error) {
+        
+    }
 }
 
 // All Task
