@@ -1,12 +1,16 @@
 const task = {
-    task : "/task",
-    task : "/task/:id", 
+    create : "/task",
+    update : "/task/:id", 
+    delete : "/task/:id",
+    singleTask : "/task/:id",
     allTask : "/tasks"
 }
 
 const user = {
-    user : "/user",
-    user : "/user/:id",
+    create : "/user",
+    update : "/user/:id", 
+    delete : "/user/:id",
+    singleUser : "/user/:id",
     allUser : "/users"
 }
 

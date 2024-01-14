@@ -1,8 +1,24 @@
+// const db = require("../../db")
+
+const userModel = require("../models/user-model")
 
 // User create
 
 exports.createUser = async (req,res) =>{
-    res.send(" Create user ")
+    let reqBoyd = req.body;
+    try{
+        let data = await userModel.create(reqBoyd)
+        res.status(201).json({
+            status:"success",
+            data : data
+        })
+    }catch(e){
+        res.status(500).json({
+            status:"fail",
+            data : e.toString()
+        })
+    }
+
 }
 
 // Task Update

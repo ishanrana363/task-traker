@@ -51,10 +51,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const connectDB = require("./db")
-// Database Connect
 
-connectDB().catch(err => console.log("DB is not connect",err));
 
 
 
@@ -66,11 +63,16 @@ const userRouter = require("./src/routes/user-routes")
 
 // Task routes
 
-app.use("/api/v1",taskRouter)
+app.use(taskRouter)
 
 // User Routes
 
-app.use("/api/v1",userRouter)
+app.use(userRouter)
+
+const connectDB = require("./db")
+// Database Connect
+
+connectDB().catch(err => console.log("DB is not connect",err));
 // # app.use(express.static("client/dist"));
 
 // # app.get("*",(req,res)=>{
