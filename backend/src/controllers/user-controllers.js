@@ -24,7 +24,23 @@ exports.createUser = async (req,res) =>{
 // Task Update
 
 exports.updateUser = async (req,res) =>{
-res.send(" update user ")
+    try{
+        const id = req.params.id;
+        let reqBoyd = req.body;
+        const filter = {_id:id}
+        const updateData = reqBoyd;
+        let data = await userModel.findByIdAndUpdate(filter,updateData,{new:true})
+        res.status(200).json({
+            status:"success",
+            data : data
+        })
+    }catch(e){
+        res.status(500).json({
+            status:"fail",
+            data : e.toString()
+        })
+    }
+
 }
 
 // Task Delete
