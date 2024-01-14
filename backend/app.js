@@ -61,10 +61,16 @@ connectDB().catch(err => console.log("DB is not connect",err));
 
 // api file import
 
-// # const routes = require("./src/routes/api")
+const taskRouter = require("./src/routes/task-routes")
+const userRouter = require("./src/routes/user-routes")
 
-// # app.use("/api/v1",routes)
+// Task routes
 
+app.use("/api/v1",taskRouter)
+
+// User Routes
+
+app.use("/api/v1",userRouter)
 // # app.use(express.static("client/dist"));
 
 // # app.get("*",(req,res)=>{
