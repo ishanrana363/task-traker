@@ -10,7 +10,7 @@ const user = {
     create : "/user",
     update : "/user", 
     delete : "/user",
-    singleUser : "/user/:id",
+    singleUser : "/user",
     allUser : "/users"
 }
 

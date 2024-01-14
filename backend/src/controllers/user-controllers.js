@@ -69,13 +69,34 @@ exports.deleteUser = async (req,res) =>{
 exports.singleUser = async (req,res) =>{
     try {
         const userEmail = req.query.email;
+        const filter = { email : userEmail }
+        const data =  await userModel.findOne(filter)
+        res.status(200).json({
+            status:"success",
+            data : data
+        })
     } catch (error) {
-        
+        res.status(500).json({
+            status:"fail",
+            data : e.toString()
+        })
     }
 }
 
 // All Task
 
 exports.allUser = async (req,res) =>{
-res.send("all user find")
+    try {
+        const data = await userModel.find();
+        res.status(200).json({
+            status:"success",
+            data : data
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status:"fail",
+            data : e.toString()
+        })
+    }
 }
