@@ -38,7 +38,7 @@ const userSchema = new Schema(
         required: true,
     },
     age: {
-        
+        type:Number
     },
     },
     { timestamps: true, versionKey: false }

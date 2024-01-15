@@ -63,11 +63,11 @@ const userRouter = require("./src/routes/user-routes")
 
 // Task routes
 
-app.use(taskRouter)
+app.use("/api/v1",taskRouter)
 
 // User Routes
 
-app.use(userRouter)
+app.use("/api/v1",userRouter)
 
 const connectDB = require("./db")
 // Database Connect

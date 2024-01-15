@@ -7,10 +7,10 @@ let taskEndPoint = apiEnpoint.task;
 
 // Task Routes
 
-taskRouter.post(taskEndPoint.create ,taskController.createTask);
-taskRouter.put(taskEndPoint.update,taskController.updateTask);
-taskRouter.delete(taskEndPoint.delete,taskController.deleteTask);
-taskRouter.get(taskEndPoint.singleTask,taskController.singleTask);
+taskRouter.post(taskEndPoint.task ,taskController.createTask);
+taskRouter.put(taskEndPoint.task,taskController.updateTask);
+taskRouter.delete(taskEndPoint.task,taskController.deleteTask);
+taskRouter.get(taskEndPoint.task,taskController.singleTask);
 taskRouter.get(taskEndPoint.allTask,taskController.allTask);
 
 
