@@ -6,12 +6,23 @@ const userModel = require("../models/user-model")
 
 exports.createUser = async (req,res) =>{
     let reqBoyd = req.body;
+    let email = req.body.email;
     try{
-        let data = await userModel.create(reqBoyd)
-        res.status(201).json({
+        let userEmail = await userModel.findOne({email:email});
+        if(userEmail){
+            return res.status(403).json({
+                status:"fail",
+                msg : " User already exists"
+            })
+        }else{
+            let data = await userModel.create(reqBoyd);
+            res.status(201).json({
             status:"success",
             data : data
         })
+        }
+
+        
     }catch(e){
         res.status(500).json({
             status:"fail",
@@ -48,7 +59,6 @@ exports.updateUser = async (req,res) =>{
 exports.deleteUser = async (req,res) =>{
     try {
         const userEmail = req.query.email;
-        console.log(userEmail)
         const filter = {email:userEmail}
         const data = await userModel.deleteOne(filter);
         res.status(200).json({

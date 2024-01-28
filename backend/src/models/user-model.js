@@ -18,6 +18,10 @@ const userSchema = new Schema(
     },
         required: [true, "User email required"],
     },
+    password : {
+        type : String,
+        required : true,
+    },
     address: {
         type: String,
         required: true,
@@ -44,8 +48,8 @@ const userSchema = new Schema(
     { timestamps: true, versionKey: false }
 );
 
-// Manually create the unique index for the email field
-userSchema.index({ email: 1 }, { unique: true });
+// // Manually create the unique index for the email field
+// userSchema.index({ email: 1 }, { unique: true });
 
 const userModel = model("users", userSchema);
 

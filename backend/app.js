@@ -60,16 +60,21 @@ app.use(express.json());
 
 const taskRouter = require("./src/routes/task-routes")
 const userRouter = require("./src/routes/user-routes")
+const authRouter = require("./src/routes/auth-routes")
 
 // Task routes
 
-app.use("/api/v1",taskRouter)
+app.use("/api/v1",taskRouter);
 
 // User Routes
 
-app.use("/api/v1",userRouter)
+app.use("/api/v1",userRouter);
 
-const connectDB = require("./db")
+//auth router
+
+app.use("/api/v1",authRouter)
+
+const connectDB = require("./db");
 // Database Connect
 
 connectDB().catch(err => console.log("DB is not connect",err));

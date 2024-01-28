@@ -15,6 +15,7 @@ exports.createTask = async (req,res) =>{
                 createdBy : "ishanrana094@gamil.com"
             }
             const data = await taskModel.create(taskData);
+            // const {isDelete,...resData} = data._doc
             const {isDelete,...resData} = data._doc
             res.status(201).json({
                 status:'success',
@@ -35,7 +36,7 @@ exports.updateTask = async (req,res) =>{
         const userId = req.query.id;
         const reqBody = req.body;
         const updateData = reqBody;
-        const filter = { _id : userId };
+        const filter = { _id : userId, isDelete:false };
         const data = await taskModel.updateOne(filter,updateData);
         res.status(200).json({
             status: "success",
@@ -53,7 +54,7 @@ exports.updateTask = async (req,res) =>{
 
 exports.deleteTask = async (req, res) => {
     const taskId = req.query.id;
-    const filter = { _id: taskId };
+    const filter = { _id: taskId,isDelete:false };
     const update = { isDelete: true };
 
     try {
@@ -76,9 +77,8 @@ exports.singleTask = async (req,res) =>{
         let taskId =  req.query.id;
         let filter = { _id : taskId };
         let data = await taskModel.findOne(filter);
+        if(data.isDelete===true) throw new error();
         const {isDelete,...resData} = data._doc
-
-        if (data.isDelete) throw new Error();
         res.send({
             status: "success",
             data: resData
@@ -122,72 +122,3 @@ exports.allTask = async (req, res) => {
 
 
 
-// exports.allTask = async (req, res) => {
-//     try {
-//         // Extract user_id from query parameters
-//         const user_id = new mongoose.Types.ObjectId(req.query.id);
-//
-//         // Log the extracted user_id
-//         console.log(user_id);
-//
-//         // Define the match stage for the aggregation pipeline
-//         const matchStage = { $match: { _id: user_id } };
-//
-//         // Log the match stage
-//         console.log(matchStage);
-//
-//         // Define the joinWithUser stage for the aggregation pipeline
-//         const joinWithUser = {
-//             $lookup: { from: "users", localField: "userId", foreignField: "_id", as: "userData" }
-//         };
-//
-//         // Use aggregate to join tasks with user data
-//         let data = await taskModel.aggregate([matchStage, joinWithUser]);
-//
-//         // Respond with a success status and the aggregated data
-//         res.status(201).json({
-//             status: 'success',
-//             data: data
-//         });
-//     } catch (error) {
-//         // Handle any errors that occur during the aggregation process
-//         res.status(500).json({
-//             status: "fail",
-//             data: error.toString()
-//         });
-//     }
-// };
-
-// exports.allTask = async (req,res) =>{
-//     try {
-//         const id = req.params.id;
-//         const data = await taskModel.find()
-//         console.log(data)
-//         res.status(200).json({
-//              status: 'success',
-//              data: data
-//          });
-//     }catch (e) {
-//         res.status(500).json({
-//              status: "fail",
-//              data: e.toString()
-//         });
-//     }
-// }
-
-// exports.allTask = async (req,res) =>{
-//     try {
-//         const userId = req.query.id
-//         const filter = { _id : userId };
-//         let data =  await taskModel.findOne(filter)
-//         res.status(200).json({
-//               status: 'success',
-//               data: data
-//           });
-//     }catch (e) {
-//         res.status(500).json({
-//               status: "fail",
-//               data: e.toString()
-//          });
-//     }
-// }
