@@ -44,6 +44,9 @@ const userSchema = new Schema(
     age: {
         type:Number
     },
+    authToken : {
+        type : String
+    },
     },
     { timestamps: true, versionKey: false }
 );

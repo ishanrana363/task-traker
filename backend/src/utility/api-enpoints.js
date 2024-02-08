@@ -1,11 +1,13 @@
 const task = {
     task : "/task",
-    allTask : "/tasks"
+    allTask : "/tasks",
+    search:"/task/search"
 }
 
 const user = {
     user : "/user",
-    allUser : "/users"
+    allUser : "/users",
+    search : "/search/users"
 }
 const auth = {
     signin : "/auth/signin",

@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+ const jwt = require("jsonwebtoken");
 const userModel = require("../models/user-model");
 const SendEmailUtility = require("../helper/emailHelper");
 let otpModel = require("../models/otpModel")
@@ -18,6 +18,7 @@ exports.signIn = async (req,res) =>{
                 role : resp.role
             }
         }, process.env.AUTH_KEY);
+        await userModel.findOneAndUpdate(filter,{authToken:authToken});
         res.status(201).json({
             status:"success",
             data : authToken
@@ -33,9 +34,21 @@ exports.signIn = async (req,res) =>{
 
 exports.signOut = async (req,res)=>{
     try {
-        
+        let authValue = req.headers.authorization;
+        let authToken = authValue.split(' ')[1];
+        let verifyToken = jwt.verify(authToken,process.env.AUTH_KEY);
+        let filter = { email : verifyToken.data.email };
+        await userModel.findOneAndUpdate(filter,{authToken:""});
+        delete req.headers.authorization;
+        res.status(200).send({
+            status:"success",
+            msg : " user logout successfully"
+        })
     } catch (error) {
-        
+        res.status(404).send({
+            status:"fail",
+            msg : " User token not found "
+        })
     }
 }
 
@@ -88,7 +101,6 @@ exports.otpValidity = async (req,res)=>{
         let statusUpdate = 1;
         
         let result = await otpModel.findOne({otp:otp,email:email,status:status});
-        console.log("user result ::::",result)
         let decodeEmail = jwt.verify(result.token,process.env.AUTH_KEY);
         let userDecodeEmail = decodeEmail.email;
         if(result){

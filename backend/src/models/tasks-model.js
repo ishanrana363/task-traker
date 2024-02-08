@@ -5,7 +5,8 @@ const {Schema,model} = mongoose
 const taskSchema = new Schema({
     title : {
         type : String,
-        required : true
+        required : true,
+        unique:true,
     },
     description : {
         type : String
@@ -28,11 +29,8 @@ const taskSchema = new Schema({
     createdBy : {
         type : String,
         required : true
-    }
-    // userId : {
-    //     type : mongoose.Schema.Types.ObjectId,
-    //     required : true
-    // }
+    },
+    
 },{timestamps:true,versionKey:false})
 
 

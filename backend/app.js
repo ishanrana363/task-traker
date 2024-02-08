@@ -37,7 +37,7 @@ app.use(hpp())
 
 // Using cors for enabling CORS
 
-app.use(cors())
+app.use(cors());
 
 // Using MongoSanitize for sanitize user input
 
@@ -78,12 +78,12 @@ const connectDB = require("./db");
 // Database Connect
 
 connectDB().catch(err => console.log("DB is not connect",err));
-// # app.use(express.static("client/dist"));
 
-// # app.get("*",(req,res)=>{
-// # 	res.sendFile( path.resolve(__dirname,"client","dist","index.html") )
-// # })
+app.use(express.static("client/dist"));
 
+app.get("*",(req,res)=>{
+	res.sendFile( path.resolve(__dirname,"client","dist","index.html") )
+})
 
 
 
